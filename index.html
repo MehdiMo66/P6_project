@@ -17,12 +17,14 @@
 </head>
 
 <body>
+<script src="./assets/index.js" defer></script>
+<div class="sombre"></div>
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
 				<li>projets</li>
-				<li>contact</li>
+				<li><a href="#contact">contact</a></li>
 				
 					<li><a href="./login.html">login</a></li>
 				
@@ -47,6 +49,7 @@
 			</article>
 		</section>
 		<section id="portfolio">
+			<h2 class="projet">Mes Projets</h2>
 			<div class="modal">
 				<i class="fa-solid fa-xmark cross"></i>
 				<h3>Galerie photo</h3>
@@ -61,24 +64,25 @@
 				<i class="fa-solid fa-xmark cross"></i>
 			</div>
 				<h3>Ajout photo</h3>
-				<form method="get" class="photo-upload" enctype="multipart/form-data">
-					<div class="add">
+				<form method="post" class="photo-upload" enctype="multipart/form-data">
+					<label class="add">
 						<i class="fa-regular fa-image"></i>
-						<input type="file" value="+ Ajouter photo" accept="image/*" id="btn_add">
+						<input type="file" accept="image/*" id="btn_add">
+						<span class="add_pic">+ Ajouter photo</span>
 						<span class="format">Jpeg, png : 4mo max</span>
-						<img href="image/*">
-					</div>
+						<img src="Images/*" alt="" id="images">
+					</label>
 					<div class="formulaire">
 						<label for="title">Titre</label>
-						<input type="text" name="title" id="title" value="text">
-						<label for="Categotie">Categotie</label>
-						<input type="number" name="Categorie" id="Categorie" value="1">
+						<input type="text" name="title" id="title" >
+						<label for="Categorie">Categotie</label>
+						<select  name="Categorie" id="Categorie">
+						</select>
 						<div id="trait_dessous"></div>
-						<input type="submit" value="Valider" id="valider">
+						<input type="submit" value="Valider" id="valider" class="btnGrey" disabled='true'>
 					</div>
 				</form>
 			</div> 
-
 			<div class="filters">
 			</div>
 			<div class="gallery">
@@ -108,7 +112,5 @@
 	</footer>
 
 </body>
-
-<script src="./assets/index.js"></script>
 
 </html>

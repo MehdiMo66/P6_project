@@ -76,8 +76,6 @@ const getPictures = (elem, data, edit) => {
                     }
                     getWork();//verifier le statut 200 204 avant de lancer la fonction
                     return reponse.json()
-                }).then((data) => {
-                    // console.log(data)
                 })
                     .catch((error) => {
                         console.log(error.message)
@@ -111,15 +109,14 @@ const getCategory = () => {
             Button.id = w.id;
             filters.appendChild(Button);
 
-            const option = document.createElement('option')
-            option.value = w.id
-            option.innerText = w.name
+            const option = document.createElement('option');
+            option.value = w.id;
+            option.innerText = w.name;
             target.appendChild(option)
         })
     }
     )
 }
-
 
 filters.addEventListener("click", (event) => {
     //Je m'assure d'etre dans le bouton de la class '.filters'
@@ -196,8 +193,8 @@ if (token) {
         event.preventDefault();
 
         image = document.getElementById('btn_add').files[0],
-            title = document.getElementById('title').value,
-            categoryId = parseInt(document.getElementById('Categorie').value)
+        title = document.getElementById('title').value,
+        categoryId = parseInt(document.getElementById('Categorie').value)
 
         const Data = new FormData();
 
@@ -216,9 +213,6 @@ if (token) {
                 sombre.style.display = 'none'
             }
             return rep.json();
-        }).then((data) => {
-
-            console.log(data)
         })
     })
 
@@ -248,6 +242,7 @@ const play = () => {
 }
 titre.addEventListener('input', play)
 fichier.addEventListener('change', play)
+
 
 getCategory();
 getWork();

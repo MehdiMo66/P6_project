@@ -48,18 +48,18 @@ const getPictures = (elem, data, edit) => {
     image.innerHTML = '';
     data.forEach((w) => {
         const figure = document.createElement('figure');
-        const img = document.createElement('img')
-        img.setAttribute('src', w.imageUrl)
+        const img = document.createElement('img');
+        img.setAttribute('src', w.imageUrl);
 
         if (edit) {
-            const i = document.createElement('i')
-            i.className = "fa-solid fa-trash-can"
-            figure.appendChild(i)
+            const i = document.createElement('i');
+            i.className = "fa-solid fa-trash-can";
+            figure.appendChild(i);
             i.addEventListener('click', (event) => {
-                const deletePic = event.target.parentNode
-                deletePic.remove()
+                const deletePic = event.target.parentNode;
+                deletePic.remove();
                 let BtnSelected = document.querySelector('.button_selected');
-                BtnSelected.classList.remove(`button_selected`)
+                BtnSelected.classList.remove(`button_selected`);
                 allFilters.classList.add(`button_selected`);
 
                 fetch(`http://localhost:5678/api/works/${w.id}`, {
@@ -72,23 +72,23 @@ const getPictures = (elem, data, edit) => {
                         if (reponse.status === 401) {
                             throw new Error('Erreur dans l’identifiant ou le mot de passe');
                         }
-                        throw new Error('erreur')
+                        throw new Error('erreur');
                     }
                     getWork();//verifier le statut 200 204 avant de lancer la fonction
-                    return reponse.json()
+                    return reponse.json();
                 })
                     .catch((error) => {
-                        console.log(error.message)
+                        console.log(error.message);
                     })
             })
         }
         else {
-            const figcaption = document.createElement('figcaption')
-            figcaption.textContent = w.title
-            figure.appendChild(figcaption)
+            const figcaption = document.createElement('figcaption');
+            figcaption.textContent = w.title;
+            figure.appendChild(figcaption);
         }
-        figure.prepend(img)
-        image.appendChild(figure)
+        figure.prepend(img);
+        image.appendChild(figure);
     })
 }
 
@@ -100,9 +100,7 @@ const getCategory = () => {
 
         return rep.json();
     }).then((data) => {
-        console.log('tableau complet')
-        console.log(data)
-
+       
         data.forEach((w) => {
             let Button = document.createElement('button');
             Button.innerText = w.name;
@@ -140,30 +138,30 @@ filters.addEventListener("click", (event) => {
 
 if (token) {
 
-    login.innerText = 'logout'
+    login.innerText = 'logout';
 
-    const admin = document.createElement('div')
-    admin.className = 'admin'
-    portfolio.prepend(admin)
-    admin.appendChild(h2)
+    const admin = document.createElement('div');
+    admin.className = 'admin';
+    portfolio.prepend(admin);
+    admin.appendChild(h2);
 
-    const modifierPhoto = document.createElement('span')
-    modifierPhoto.innerHTML = `modifier <i class='fa-regular fa-pen-to-square'></i>`
-    modifierPhoto.style.cursor = 'pointer'
-    admin.appendChild(modifierPhoto)
+    const modifierPhoto = document.createElement('span');
+    modifierPhoto.innerHTML = `modifier <i class='fa-regular fa-pen-to-square'></i>`;
+    modifierPhoto.style.cursor = 'pointer';
+    admin.appendChild(modifierPhoto);
 
     modifierPhoto.addEventListener('click', () => {
-        modal.style.display = 'block'
-        sombre.style.display = 'block'
-        getPictures('.image', work, true)
+        modal.style.display = 'block';
+        sombre.style.display = 'block';
+        getPictures('.image', work, true);
     })
 
     document.querySelectorAll('.cross').forEach((cross) => {
         cross.addEventListener('click', () => {
             modal.style.display = 'none';
             modalAdd.style.display = 'none';
-            sombre.style.display = 'none'
-            console.log(modalAdd)
+            sombre.style.display = 'none';
+            console.log(modalAdd);
         })
     })
 
@@ -174,20 +172,20 @@ if (token) {
 
 
     ajoutPhoto.addEventListener('click', () => {
-        images.style.display = 'none'
-        modalSend.reset()
-        modal.style.display = 'none'
-        modalAdd.style.display = 'block'
-        valider.style.backgroundColor = 'rgb(203, 214, 220)'
+        images.style.display = 'none';
+        modalSend.reset();
+        modal.style.display = 'none';
+        modalAdd.style.display = 'block';
+        valider.style.backgroundColor = 'rgb(203, 214, 220)';
         let BtnSelected = document.querySelector('.button_selected');
-        BtnSelected.classList.remove(`button_selected`)
+        BtnSelected.classList.remove(`button_selected`);
         allFilters.classList.add(`button_selected`);
     })
 
-    const bandeNoire = document.createElement('div')
-    bandeNoire.className = 'bande_noire'
-    bandeNoire.innerHTML = `<span><i class="fa-regular fa-pen-to-square"></i> Mode édition</span>`
-    header.prepend(bandeNoire)
+    const bandeNoire = document.createElement('div');
+    bandeNoire.className = 'bande_noire';
+    bandeNoire.innerHTML = `<span><i class="fa-regular fa-pen-to-square"></i> Mode édition</span>`;
+    header.prepend(bandeNoire);
 
     modalSend.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -198,9 +196,9 @@ if (token) {
 
         const Data = new FormData();
 
-        Data.append('image', image)
-        Data.append('title', title)
-        Data.append('category', categoryId)
+        Data.append('image', image);
+        Data.append('title', title);
+        Data.append('category', categoryId);
 
         fetch('http://localhost:5678/api/works', {
             method: 'POST',
@@ -208,9 +206,9 @@ if (token) {
             body: Data
         }).then((rep) => {
             if ((rep.ok) && (rep.status === 201)) {
-                getWork()
-                modalAdd.style.display = 'none'
-                sombre.style.display = 'none'
+                getWork();
+                modalAdd.style.display = 'none';
+                sombre.style.display = 'none';
             }
             return rep.json();
         })
@@ -229,6 +227,7 @@ if (token) {
         images.style.display = 'block';
     });
 }
+
 
 const play = () => {
 

@@ -5,13 +5,11 @@ if (sessionStorage.getItem('token')) {
 const Connect = document.querySelector(".connexion")
 
 Connect.addEventListener("submit", (event) => {
-
     event.preventDefault();
     const User = {
         email: document.getElementById('name').value,
         password: document.getElementById('password').value
     }
-
 
     fetch("http://localhost:5678/api/users/login", {
         method: "POST",
@@ -19,7 +17,6 @@ Connect.addEventListener("submit", (event) => {
         body: JSON.stringify(User)
     }).then((reponse) => {
         if (!reponse.ok) {
-            console.log('not allowed');
             if (reponse.status === 401) {
                 throw new Error('Erreur dans l’identifiant ou le mot de passe');
             }
@@ -31,7 +28,6 @@ Connect.addEventListener("submit", (event) => {
         if (data.token) {
             sessionStorage.setItem('token', data.token);
             window.location.href = "/index.html";
-
         }
     })
 

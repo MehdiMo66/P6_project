@@ -1,10 +1,7 @@
-if (sessionStorage.getItem('token')) {
-    sessionStorage.removeItem('token');
-}
 
-const Connect = document.querySelector(".connexion")
+const connect = document.querySelector(".connexion");
 
-Connect.addEventListener("submit", (event) => {
+connect.addEventListener("submit", (event) => {
     event.preventDefault();
     const User = {
         email: document.getElementById('name').value,
@@ -37,5 +34,9 @@ Connect.addEventListener("submit", (event) => {
 
         })
 })
+
+if(sessionStorage.getItem('token')) {
+    window.location.href = "/index.html";
+}
 
 

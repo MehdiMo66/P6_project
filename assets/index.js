@@ -1,15 +1,15 @@
 let work = [];
 
+const token = sessionStorage.getItem('token');
+
 let gallery = document.querySelector('.gallery');
 let filters = document.querySelector('.filters');
-let Button = document.querySelector('.button');
+let button = document.querySelector('.button');
 
-let Categorie = document.getElementById('Categorie');
+let categorie = document.getElementById('Categorie');
 const header = document.querySelector('header')
 const portfolio = document.getElementById('portfolio');
 const h2 = document.querySelector('.projet');
-
-const token = sessionStorage.getItem('token');
 
 const modal = document.querySelector('.modal');
 const modalAdd = document.querySelector('.modal_add');
@@ -58,8 +58,8 @@ const getPictures = (elem, data, edit) => {
             i.addEventListener('click', (event) => {
                 const deletePic = event.target.parentNode;
                 deletePic.remove();
-                let BtnSelected = document.querySelector('.button_selected');
-                BtnSelected.classList.remove(`button_selected`);
+                let btnSelected = document.querySelector('.button_selected');
+                btnSelected.classList.remove(`button_selected`);
                 allFilters.classList.add(`button_selected`);
 
                 fetch(`http://localhost:5678/api/works/${w.id}`, {
@@ -74,7 +74,7 @@ const getPictures = (elem, data, edit) => {
                         }
                         throw new Error('erreur');
                     }
-                    getWork();//verifier le statut 200 204 avant de lancer la fonction
+                    getWork();
                     return reponse.json();
                 })
                     .catch((error) => {
@@ -97,15 +97,14 @@ const getCategory = () => {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     }).then((rep) => {
-
         return rep.json();
     }).then((data) => {
        
         data.forEach((w) => {
-            let Button = document.createElement('button');
-            Button.innerText = w.name;
-            Button.id = w.id;
-            filters.appendChild(Button);
+            let button = document.createElement('button');
+            button.innerText = w.name;
+            button.id = w.id;
+            filters.appendChild(button);
 
             const option = document.createElement('option');
             option.value = w.id;
@@ -117,17 +116,17 @@ const getCategory = () => {
 }
 
 filters.addEventListener("click", (event) => {
-    //Je m'assure d'etre dans le bouton de la class '.filters'
+  
     if (event.target.tagName === 'BUTTON') {
-        let BtnSelected = document.querySelector('.button_selected');//Je pointe sur l'element DOM qui a la class 'button_selected'
-        BtnSelected.classList.remove(`button_selected`);//Je retire la class de l'element DOM selectionne precedemment
+        let btnSelected = document.querySelector('.button_selected');//Je pointe sur l'element DOM qui a la class 'button_selected'
+        btnSelected.classList.remove(`button_selected`);//Je retire la class de l'element DOM selectionne precedemment
         event.target.classList.add(`button_selected`);//J'ajoute la class a l'objet DOM sur lequel j'ai cliqué
 
         if (event.target.id) {//Si un id est existant, alors je filtre les categories 
-            const ClickFilter = work.filter(function (item) {
+            const clickFilter = work.filter(function (item) {
                 return item.category.id == event.target.id;//Je compare les id des item a l'id de la categorie(event.target.id)pour uniquement retourner ceux qui correspondent
             })
-            getPictures('.gallery', ClickFilter, false);//J'apelle la fonction pour afficher les resultat filtrees dans ClickFilter
+            getPictures('.gallery', clickFilter, false);//J'apelle la fonction pour afficher les resultat filtrees dans ClickFilter
 
         } else {//Si aucun id est existant, j'affiche tout
 
@@ -137,8 +136,13 @@ filters.addEventListener("click", (event) => {
 })
 
 if (token) {
-
+    
     login.innerText = 'logout';
+    login.addEventListener('click', ()=>{
+        if (sessionStorage.getItem('token')) {
+            sessionStorage.removeItem('token');
+        }
+    })
 
     const admin = document.createElement('div');
     admin.className = 'admin';
@@ -161,7 +165,6 @@ if (token) {
             modal.style.display = 'none';
             modalAdd.style.display = 'none';
             sombre.style.display = 'none';
-            console.log(modalAdd);
         })
     })
 
@@ -170,15 +173,14 @@ if (token) {
         modal.style.display = 'block';
     })
 
-
     ajoutPhoto.addEventListener('click', () => {
         images.style.display = 'none';
         modalSend.reset();
         modal.style.display = 'none';
         modalAdd.style.display = 'block';
         valider.style.backgroundColor = 'rgb(203, 214, 220)';
-        let BtnSelected = document.querySelector('.button_selected');
-        BtnSelected.classList.remove(`button_selected`);
+        let btnSelected = document.querySelector('.button_selected');
+        btnSelected.classList.remove(`button_selected`);
         allFilters.classList.add(`button_selected`);
     })
 
